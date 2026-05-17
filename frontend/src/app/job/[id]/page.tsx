@@ -74,7 +74,8 @@ export default function JobDetailPage() {
     load();
   }, [id]);
 
-  const handleStatusChange = async (newStatus: string) => {
+  const handleStatusChange = async (newStatus: string | null) => {
+    if (!newStatus) return;
     setUpdating(true);
     setActionError('');
     try {

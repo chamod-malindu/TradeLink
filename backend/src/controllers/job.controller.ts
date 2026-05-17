@@ -103,12 +103,13 @@ export const getJobById = async (
   res: Response
 ): Promise<void> => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    const id = req.params.id as string;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(404).json({ success: false, error: 'Job not found' });
       return;
     }
 
-    const job = await JobRequest.findById(req.params.id);
+    const job = await JobRequest.findById(id);
 
     if (!job) {
       res.status(404).json({ success: false, error: 'Job not found' });
@@ -142,13 +143,14 @@ export const updateJobStatus = async (
       return;
     }
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    const id = req.params.id as string;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(404).json({ success: false, error: 'Job not found' });
       return;
     }
 
     const job = await JobRequest.findByIdAndUpdate(
-      req.params.id,
+      id,
       { status },
       { new: true, runValidators: true }
     );
@@ -176,12 +178,13 @@ export const deleteJob = async (
   res: Response
 ): Promise<void> => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    const id = req.params.id as string;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(404).json({ success: false, error: 'Job not found' });
       return;
     }
 
-    const job = await JobRequest.findByIdAndDelete(req.params.id);
+    const job = await JobRequest.findByIdAndDelete(id);
 
     if (!job) {
       res.status(404).json({ success: false, error: 'Job not found' });

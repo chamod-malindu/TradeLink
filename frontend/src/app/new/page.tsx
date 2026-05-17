@@ -155,7 +155,7 @@ export default function NewJobPage() {
                 <Select
                   value={form.category}
                   onValueChange={(val) =>
-                    setForm((prev) => ({ ...prev, category: val }))
+                    setForm((prev) => ({ ...prev, category: val || '' }))
                   }
                 >
                   <SelectTrigger>

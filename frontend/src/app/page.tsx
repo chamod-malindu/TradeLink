@@ -81,8 +81,8 @@ export default function HomePage() {
           />
         </div>
 
-        <Select value={category} onValueChange={(val) => setCategory(val === 'all' ? '' : val)}>
-          <SelectTrigger className="w-full sm:w-[180px]">
+          <Select value={category} onValueChange={(val) => setCategory(!val || val === 'all' ? '' : val)}>
+            <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="All Categories" />
           </SelectTrigger>
           <SelectContent>
@@ -95,7 +95,7 @@ export default function HomePage() {
           </SelectContent>
         </Select>
 
-        <Select value={status} onValueChange={(val) => setStatus(val === 'all' ? '' : val)}>
+        <Select value={status} onValueChange={(val) => setStatus(!val || val === 'all' ? '' : val)}>
           <SelectTrigger className="w-full sm:w-[160px]">
             <SelectValue placeholder="All Statuses" />
           </SelectTrigger>
