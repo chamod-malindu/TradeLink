@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getJobs } from '@/lib/api';
 import JobCard from '@/components/JobCard';
 import {
@@ -28,12 +28,14 @@ interface Job {
 export default function HomePage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [category, setCategory] = useState('');
   const [status, setStatus] = useState('');
   const [search, setSearch] = useState('');
 
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     setLoading(true);
+    setError('');
     try {
       const params: Record<string, string> = {};
       if (category) params.category = category;
@@ -42,24 +44,20 @@ export default function HomePage() {
 
       const res = await getJobs(params);
       if (res.success) setJobs(res.data);
-    } catch (err) {
-      console.error('Failed to load jobs:', err);
+    } catch {
+      setError(
+        'Could not load jobs. Make sure the backend is running on port 5001.'
+      );
+      setJobs([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, [category, status, search]);
 
   useEffect(() => {
-    fetchJobs();
-  }, [category, status]);
-
-  // debounced search
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      fetchJobs();
-    }, 400);
+    const timeout = setTimeout(fetchJobs, search ? 400 : 0);
     return () => clearTimeout(timeout);
-  }, [search]);
+  }, [fetchJobs, search]);
 
   return (
     <div className="space-y-6">
@@ -109,6 +107,12 @@ export default function HomePage() {
           </SelectContent>
         </Select>
       </div>
+
+      {error && (
+        <div className="rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          {error}
+        </div>
+      )}
 
       {/* job listing */}
       {loading ? (

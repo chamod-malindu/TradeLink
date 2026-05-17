@@ -53,16 +53,20 @@ export default function JobDetailPage() {
   const router = useRouter();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [actionError, setActionError] = useState('');
   const [updating, setUpdating] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const load = async () => {
+      setLoadError('');
       try {
         const res = await getJobById(id as string);
         if (res.success) setJob(res.data);
-      } catch (err) {
-        console.error('Failed to load job:', err);
+        else setLoadError('Job not found.');
+      } catch {
+        setLoadError('Could not load this job. Check that the backend is running.');
       } finally {
         setLoading(false);
       }
@@ -72,13 +76,16 @@ export default function JobDetailPage() {
 
   const handleStatusChange = async (newStatus: string) => {
     setUpdating(true);
+    setActionError('');
     try {
       const res = await updateJobStatus(id as string, newStatus);
       if (res.success) {
         setJob((prev) => (prev ? { ...prev, status: newStatus as Job['status'] } : prev));
+      } else {
+        setActionError(res.error || 'Failed to update status.');
       }
-    } catch (err) {
-      console.error('Status update failed:', err);
+    } catch {
+      setActionError('Could not update status. Please try again.');
     } finally {
       setUpdating(false);
     }
@@ -88,11 +95,16 @@ export default function JobDetailPage() {
     if (!confirm('Are you sure you want to delete this request?')) return;
 
     setDeleting(true);
+    setActionError('');
     try {
-      await deleteJob(id as string);
-      router.push('/');
-    } catch (err) {
-      console.error('Delete failed:', err);
+      const res = await deleteJob(id as string);
+      if (res.success) router.push('/');
+      else {
+        setActionError(res.error || 'Failed to delete job.');
+        setDeleting(false);
+      }
+    } catch {
+      setActionError('Could not delete job. Please try again.');
       setDeleting(false);
     }
   };
@@ -108,7 +120,9 @@ export default function JobDetailPage() {
   if (!job) {
     return (
       <div className="text-center py-20">
-        <p className="text-muted-foreground mb-4">Job not found.</p>
+        <p className="text-muted-foreground mb-4">
+          {loadError || 'Job not found.'}
+        </p>
         <Link href="/">
           <Button variant="outline">Back to listings</Button>
         </Link>
@@ -197,6 +211,12 @@ export default function JobDetailPage() {
           </div>
 
           <Separator />
+
+          {actionError && (
+            <div className="rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              {actionError}
+            </div>
+          )}
 
           {/* actions */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
