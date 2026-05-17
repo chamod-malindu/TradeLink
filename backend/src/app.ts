@@ -10,7 +10,18 @@ app.use(
     origin:
       process.env.NODE_ENV === 'production'
         ? 'https://your-domain.com'
-        : 'http://localhost:3000',
+        : (origin, callback) => {
+            if (
+              !origin ||
+              /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+)(:\d+)?$/.test(
+                origin
+              )
+            ) {
+              callback(null, true);
+            } else {
+              callback(new Error('Not allowed by CORS'));
+            }
+          },
     credentials: true,
   })
 );

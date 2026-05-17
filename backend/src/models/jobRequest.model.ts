@@ -65,4 +65,8 @@ jobRequestSchema.index({ status: 1 });
 jobRequestSchema.index({ category: 1 });
 jobRequestSchema.index({ createdAt: -1 });
 
-export default mongoose.model<IJobRequest>('JobRequest', jobRequestSchema);
+export default mongoose.model<IJobRequest>(
+  'JobRequest',
+  jobRequestSchema,
+  'jobRequests'
+);
