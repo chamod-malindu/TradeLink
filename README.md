@@ -133,8 +133,8 @@ TradeLink/
 
 ## Live Demo
 
-- Frontend:
-- Backend API: 
+- **Frontend App:** [https://trade-link-g7e49vr5x-malindu512adobe-3040s-projects.vercel.app/](https://trade-link-g7e49vr5x-malindu512adobe-3040s-projects.vercel.app/)
+- **Backend API:** [https://tradelink-8oez.onrender.com/api/health](https://tradelink-8oez.onrender.com/api/health)
 
 ## Author
 
