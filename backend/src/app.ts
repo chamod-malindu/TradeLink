@@ -7,21 +7,7 @@ const app = express();
 // middleware
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? 'https://your-domain.com'
-        : (origin, callback) => {
-            if (
-              !origin ||
-              /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+)(:\d+)?$/.test(
-                origin
-              )
-            ) {
-              callback(null, true);
-            } else {
-              callback(new Error('Not allowed by CORS'));
-            }
-          },
+    origin: true, // Allows any origin (like Vercel) to connect to the API
     credentials: true,
   })
 );

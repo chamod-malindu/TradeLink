@@ -46,7 +46,7 @@ export default function HomePage() {
       if (res.success) setJobs(res.data);
     } catch {
       setError(
-        'Could not load jobs. Make sure the backend is running on port 5001.'
+        'Could not load jobs. Please ensure the backend API is reachable.'
       );
       setJobs([]);
     } finally {
