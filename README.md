@@ -133,13 +133,12 @@ TradeLink/
 
 ## Live Demo
 
-<!-- Add after deployment -->
-- Frontend: _pending_
-- Backend API: _pending_
+- Frontend:
+- Backend API: 
 
 ## Author
 
-Your Name — [GitHub](https://github.com/YOUR_USERNAME)
+Chamod Malindu — [GitHub](https://github.com/chamod-malindu)
 
 ## License
 
