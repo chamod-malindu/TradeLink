@@ -1,6 +1,6 @@
 # TradeLink — Mini Service Request Board
 
-A full-stack web app for the **GlobalTNA Full-Stack Developer Intern** technical assessment. Homeowners post service requests; tradespeople browse open jobs and update their status.
+A full-stack modern web application connecting homeowners with skilled local tradespeople. Homeowners can quickly post service requests, and tradespeople can browse open jobs, manage their workflow, and update job statuses in real-time.
 
 ## Tech Stack
 
@@ -133,13 +133,12 @@ TradeLink/
 
 ## Live Demo
 
-<!-- Add after deployment -->
-- Frontend: _pending_
-- Backend API: _pending_
+- Frontend:
+- Backend API: 
 
 ## Author
 
-Your Name — [GitHub](https://github.com/YOUR_USERNAME)
+Chamod Malindu — [GitHub](https://github.com/chamod-malindu)
 
 ## License
 
